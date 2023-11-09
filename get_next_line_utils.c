@@ -6,7 +6,7 @@
 /*   By: vsinagl <vsinagl@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 18:05:29 by vsinagl           #+#    #+#             */
-/*   Updated: 2023/11/09 18:09:34 by vsinagl          ###   ########.fr       */
+/*   Updated: 2023/11/09 18:28:48 by vsinagl          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char	*ft_strrchr(const char *s, int c)
-{
-	int		i;
-	char	*res;
-
-	i = 0;
-	res = (char *)s;
-	if (c > 125)
-		return (res);
-	while (res[i] != '\0')
-		i++;
-	while (i >= 0)
-	{
-		if (res[i] == c)
-			return (res + i);
-		i--;
-	}
-	return (NULL);
-}
 
 char	*ft_strdup(const char *s)
 {

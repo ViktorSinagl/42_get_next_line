@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include  <fcntl.h>
 #include <stdio.h>
-
 #include "get_next_line.h"
 //global variables
 int BUFFER_SIZE = 10;
@@ -85,9 +84,6 @@ char *get_next_line(int fd)
 		
 	if (fd < 0)
 		return (NULL);
-	buff = (char *)malloc((BUFFER_SIZE - 1) * sizeof(char));
-	if (nextBuff == NULL)
-		return (NULL);
 	//condition for checking if BUFFER_SIZE is bigger than max int number ? BUFFER_SIZE from subject declares as INT
 	err = read_newline(fd, buff);
 	if (err < 0)
@@ -114,8 +110,13 @@ int		main(void)
 	char *tst3;
 	char *tmp;
 
+	//testing freeing null pointer
+	tmp = tst;
+	free(tmp);
+
 	//first init
 	tst = ft_strdup("ahoj");
+
 
 	//loop 1
 	tmp = tst;
