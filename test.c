@@ -60,11 +60,11 @@ ssize_t	read_newline(int fd, char *buff)
 			free(buff_read);
 			return (-1);
 		}
-		buff = ft_strjoin(buff, buff_read);
-		free(tmp);
+		buff = ft_strjoin(buff, buff_read);	
+		if (tmp != NULL)
+			free(tmp);
 		if (read_err < BUFFER_SIZE)
 		{
-			free(tmp);
 			free(buff_read);
 			return(1);
 		}
@@ -111,8 +111,10 @@ int		main(void)
 	char *tmp;
 
 	//testing freeing null pointer
+	tst = NULL;
 	tmp = tst;
-	free(tmp);
+	if (tmp != NULL)
+		printf("memory allocated\n");
 
 	//first init
 	tst = ft_strdup("ahoj");
