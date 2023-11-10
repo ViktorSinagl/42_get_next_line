@@ -104,7 +104,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 
-char	*newline_join(char *buff, char *buff_read, char **cursor)
+char	*newline_join(char *buff, char *buff_read, char ***cursor)
 {
 	size_t		i;
 	size_t 		j;
@@ -116,11 +116,10 @@ char	*newline_join(char *buff, char *buff_read, char **cursor)
 	while (buff_read[i] != '\n')
 		i++;
 	str_left = (char *)malloc(sizeof(char) * (i + 2));
-	printf("the strlen: %zu\n",ft_strlen(buff_read));
-	printf("the i: %zu\n",i);
-	printf("the malloc size of cursor: %zu\n", ft_strlen(buff_read) - 1 - i);
-	cursor = (char **)malloc(sizeof(char) * (ft_strlen(buff_read) - i -1));
-	if (cursor )
+	// printf("the strlen: %zu\n",ft_strlen(buff_read));
+	// printf("the i: %zu\n",i);
+	// printf("the malloc size of cursor: %zu\n", ft_strlen(buff_read) - 1 - i);
+	//cursor = (char **)malloc(sizeof(char) * (ft_strlen(buff_read) - i -1));
 	i = 0;
 	while(buff_read[i] != '\n')
 	{
@@ -133,13 +132,14 @@ char	*newline_join(char *buff, char *buff_read, char **cursor)
 	buff = ft_strjoin(buff, str_left);
 	free(tmp);
 	j = 0;
-	while(buff_read[i] != '\0')
-	{
-		*cursor[j] = buff_read[i];
-		j++; 
-		i++;
-	}
-	*cursor[j] = '\0';
+	**cursor = ft_strdup("ja");
+	// while(buff_read[i] != '\0')
+	// {
+	// 	cursor[j] = buff_read[i];
+	// 	j++; 
+	// 	i++;
+	// }
+	//*cursor[j] = '\0';
 	return (buff);
 }
 
@@ -167,7 +167,7 @@ char	*read_newline(int fd, char *buff, char **cursor)
 		}
 		if(ft_strchr(buff_read, '\n'))
 		{
-			buff = newline_join(buff, buff_read, cursor);
+			buff = newline_join(buff, buff_read, &cursor);
 			free(buff_read);
 			return(buff);
 		}
