@@ -14,6 +14,6 @@ FLAGS = -Wall -Wextra -Werror
 
 TARGET:= test
 
-$(TARGET):	$(TOBJS)
-	cc $(FLAGS) -c $(TSRCS)
-	cc $(TOBJS) -o $(TARGET)
+$(TARGET):	
+	cc $(FLAGS) -c $(TSRCS) 
+	cc $(TOBJS) 

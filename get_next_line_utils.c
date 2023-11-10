@@ -6,7 +6,7 @@
 /*   By: vsinagl <vsinagl@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 18:05:29 by vsinagl           #+#    #+#             */
-/*   Updated: 2023/11/09 18:28:48 by vsinagl          ###   ########.fr       */
+/*   Updated: 2023/11/10 16:02:49 by vsinagl          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-
 char	*ft_strdup(const char *s)
 {
 	char	*sdup;
@@ -86,4 +85,24 @@ char	*ft_strdup(const char *s)
 	}
 	sdup[n] = '\0';
 	return (sdup);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		len1;
+	int		len2;
+	char	*str;
+
+	if (s1 && s2)
+	{
+		len1 = ft_strlen(s1);
+		len2 = ft_strlen(s2);
+		str = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+		if (str == NULL)
+			return (NULL);
+		ft_memmove(str, s1, ft_strlen(s1) + 1);
+		ft_memmove((str + ft_strlen(s1)), s2, ft_strlen(s2) + 1);
+		return (str);
+	}
+	return (NULL);
 }
