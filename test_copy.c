@@ -20,21 +20,23 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strchr_m(const char *s, int c)
 {
 	char	*res;
+	size_t	i;
 
 	res = (char *)s;
 	if (c > 127)
 		return (res);
-	while (*res != '\0')
+	i = 0;
+	while (res[i] != '\0')
 	{
-		if (*res == c)
+		if (res[i] == c)
 			return (res);
-		res++;
+		i++;
 	}
-	if (*res == c)
-		return (res);
+	if (res[i] == c)
+		return (i);
 	return (NULL);
 }
 
@@ -100,9 +102,32 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ft_memmove((str + ft_strlen(s1)), s2, ft_strlen(s2) + 1);
 		return (str);
 	}
-	return (NULL);
+	return (0);
 }
 
+
+
+char	*newline_join(char *buff, char *buff_read, char ***cursor)
+{
+		size_t		n;
+		size_t		i;
+		char		*tmp;
+
+		n = ft_strchar_m(buff_read);
+		buff = (char *)malloc((n + 1) * sizeof(char));
+		while (buff_read != '\n')
+			buff[i++] = buff_read++;
+		buff[i] = '\n';
+		buff[i++] = '0';	
+		if (**cursor != NULL)
+			free(cursor);
+		**cursor = (char *)malloc((ft_strlen(buff_read) - n + 1) * sizeof(char))
+		i = 0;
+		while (++buff_read != '\0')
+			**cursor[i++] = buff_read;
+		**cursor[i] = '0';
+		return (buff);
+}
 
 char	*newline_join(char *buff, char *buff_read, char ***cursor)
 {
@@ -145,37 +170,25 @@ char	*newline_join(char *buff, char *buff_read, char ***cursor)
 
 //NEW_LINE JOIN FUNCTION HERE
 
-char	*read_newline(int fd, char *buff, char **cursor)
+char	*read_newline(int fd, char *buff, char **cursor, char *buff_read)
 {
 	ssize_t		read_err;
-	char		*buff_read;
 	char		*tmp;
 
-	buff_read = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
-	if (buff_read == NULL)
-		return(NULL);
 	while(1)
 	{
-		//reading and adding null terminated character
 		tmp = buff;
 		read_err = read(fd, buff_read, BUFFER_SIZE);
 		buff_read[BUFFER_SIZE + 1] = '\0';
 		if (read_err < 0)
-		{
-			free(buff_read);
 			return (NULL);
-		}
-		if(ft_strchr(buff_read, '\n'))
+		if(ft_strchr_m(buff_read, '\n') || read_err < BUFFER_SIZE)
 		{
-			buff = newline_join(buff, buff_read, &cursor);
-			free(buff_read);
-			return(buff);
-		}
-		if (read_err < BUFFER_SIZE)
-		{
-			buff = ft_strjoin(buff, buff_read);
+			if (ft_strchr_m(buff_read, '\n'))
+				buff = newline_join(buff, buff_read, &cursor);
+			else if (read_err < BUFFER_SIZE)
+				buff = ft_strjoin(buff, buff_read);
 			free(tmp);
-			free(buff_read);
 			return(buff);
 		}
 		buff = ft_strjoin(buff, buff_read);	
@@ -189,18 +202,20 @@ char *get_next_line(int fd)
 {
 	static char	*cursor;
 	char		*buff;
+	char		*buff_read;
 	ssize_t		err;
 
 	if (fd < 0)
 		return (NULL);
 	if (cursor == NULL)
-	{
 		buff = ft_strdup("");
-	}
 	else
 		buff = cursor;
-	//condition for checking if BUFFER_SIZE is bigger than max int number ? BUFFER_SIZE from subject declares as INT
-	buff = read_newline(fd, buff, &cursor);
+	buff_read = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
+	if (buff_read == NULL)
+		return(NULL);
+	buff = read_newline(fd, buff, &cursor, buff_read);
+	free(buff_read);
 	if (buff == NULL)
 		return (NULL);
 	return (buff);
