@@ -117,7 +117,7 @@ char	*newline_join(char *buff, char *buff_read, char **cursor)
 
 		tmp = *cursor;
 		n = ft_strchr_m(buff_read, '\n');
-		left = (char *)malloc((n + 1) * sizeof(char));
+		left = (char *)malloc((n + 2) * sizeof(char));
 		i = 0;
 		while (*buff_read != '\n')
 		{
@@ -145,7 +145,7 @@ char	*read_newline(int fd, char *buff, char **cursor, char *buff_read)
 	{
 		tmp = buff;
 		read_err = read(fd, buff_read, BUFFER_SIZE);
-		buff_read[BUFFER_SIZE + 1] = '\0';
+		buff_read[BUFFER_SIZE] = '\0';
 		if (read_err < 0)
 			return (NULL);
 		if(ft_strchr_m(buff_read, '\n') || read_err < BUFFER_SIZE)
@@ -196,12 +196,17 @@ int main(void)
 	char *a = get_next_line(fd);
 	printf("%s",a)	;	
 	free(a);
+	a = get_next_line(fd);
+	printf("%s",a)	;	
+	free(a);
+	a = get_next_line(fd);
+	printf("%s",a)	;	
+	free(a);
 	// char *b = get_next_line(fd);
 	// printf("%s",b)	;	
 	// b = get_next_line(fd);
 	// printf("%s",b)	;	
 	// free(b);
-	free(cursor);
 	close(fd);
 	return (0);
 }
