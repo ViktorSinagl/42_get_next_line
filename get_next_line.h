@@ -17,13 +17,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int BUFFER_SIZE = 2000;
+char *BUFF_TST[20];
 
 size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *s, int c);
+size_t	ft_strchr_m(const char *s, int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
-
-
 
 #endif

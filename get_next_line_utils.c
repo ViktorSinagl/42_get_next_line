@@ -24,22 +24,24 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strchr_m(const char *s, int c)
 {
 	char	*res;
+	size_t	i;
 
 	res = (char *)s;
 	if (c > 127)
-		return (res);
-	while (*res != '\0')
+		return (0);
+	i = 0;
+	while (res[i] != '\0')
 	{
-		if (*res == c)
-			return (res);
-		res++;
+		if (res[i] == c)
+			return (i);
+		i++;
 	}
-	if (*res == c)
-		return (res);
-	return (NULL);
+	if (res[i] == c)
+		return (i);
+	return (0);
 }
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
@@ -104,5 +106,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ft_memmove((str + ft_strlen(s1)), s2, ft_strlen(s2) + 1);
 		return (str);
 	}
-	return (NULL);
+	return (0);
 }
