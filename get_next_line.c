@@ -1,6 +1,22 @@
 
 #include	"get_next_line.h"
 
+void	*ft_memset(void *p_m, int byte, size_t n)
+{
+	size_t			i;
+	unsigned char	*p_char;
+
+	p_char = (unsigned char *)p_m;
+	i = 0;
+	while (i < n)
+	{
+		*p_char = (unsigned char)byte;
+		p_char++;
+		i++;
+	}
+	return (p_m);
+}
+
 char	*newline_join(char *buff, char *buff_read, char **cursor)
 {
 		size_t		n;
@@ -70,7 +86,7 @@ char *get_next_line(int fd)
 	else
 		buff = cursor;
 	buff_read = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
-	memset(buff_read, '\0', BUFFER_SIZE + 1);
+	ft_memset(buff_read, '\0', BUFFER_SIZE + 1);
 	if (buff_read == NULL)
 		return(NULL);
 	if (ft_strchr_m(buff, '\n'))
