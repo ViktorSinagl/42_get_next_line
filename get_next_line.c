@@ -26,7 +26,7 @@ char	*newline_join(char *buff, char *buff_read, char **cursor)
 
 		tmp = *cursor;
 		n = ft_strchr_m(buff_read, '\n');
-		left = (char *)malloc((n + 2) * sizeof(char));
+		left = (char *)malloc((n + 1) * sizeof(char));
 		i = 0;
 		while (*buff_read != '\n')
 		{

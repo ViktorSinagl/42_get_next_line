@@ -36,11 +36,11 @@ size_t	ft_strchr_m(const char *s, int c)
 	while (res[i] != '\0')
 	{
 		if (res[i] == c)
-			return (i);
+			return (++i);
 		i++;
 	}
 	if (res[i] == c)
-		return (i);
+		return (++i);
 	return (0);
 }
 

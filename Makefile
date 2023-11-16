@@ -11,12 +11,12 @@ OBJS:= $(SRCS:.c=.o);
 TOBJS:= $(TSRCS:.c=.o);
 
 FLAGS = -Wall -Wextra -Werror
-COMPILER = gcc
+COMPILER = cc
 
 TARGET:= test
 
 $(TARGET): $(SRCS)
-	$(COMPILER) $(FLAGS) $(SRCS) $(TARGET).c get_next_line.h -o $(TARGET)
+	$(COMPILER) $(FLAGS) -g $(SRCS) $(TARGET).c get_next_line.h -o $(TARGET)
 
 fclean:
 	rm $(TARGET)
