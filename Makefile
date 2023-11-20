@@ -25,7 +25,7 @@ all: $(TARGET)
 
 re: clean fclean all
 
-.PHONY: clean fclean all re testclean testre
+.PHONY: clean fclean all re testclean
 
 
 
