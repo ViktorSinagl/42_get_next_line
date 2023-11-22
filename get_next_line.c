@@ -56,23 +56,24 @@ char	*read_newline(int fd, char *buff, char **cursor, char *buff_read)
 		read_err = read(fd, buff_read, BUFFER_SIZE);
 		buff_read[read_err] = '\0';
 		if (read_err < 0)
+		{	
+			if (tmp != NULL)
+				free(buff);
 			return(NULL);
+		}
 		if (read_err == 0)
 			break;
 		if (ft_strchr_m(buff_read, '\n'))
 		{
 			buff = newline_join(buff, buff_read, cursor);
+			free(tmp);
 			return (buff);
 		}
-		// if (read_err < BUFFER_SIZE)
-		// {
-		// 	buff = ft_strjoin(buff, buff_read);
-		// 	free(tmp);
-		// 	return(buff);
-		// }
 		buff = ft_strjoin(buff, buff_read);
 		free(tmp);
 	}
+	if (tmp != NULL)
+		free (tmp);	
 	return(buff);
 }
 
@@ -107,3 +108,5 @@ char *get_next_line(int fd)
 		return (NULL);
 	return (buff);
 }
+
+
