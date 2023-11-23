@@ -1,10 +1,5 @@
 #include "get_next_line.h"
 
-//external function: ft_strjoin
-//external function: ft_strchr_m
-//external function: ft_strdup
-//external fuctnion: ft_strlen
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
