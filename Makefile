@@ -5,7 +5,6 @@ SRCS:= get_next_line.c\
 		
 TSRCS:= 	get_next_line.c\
 		get_next_line_utils.c\
-		test.c
 
 OBJS:= $(SRCS:.c=.o);
 TOBJS:= $(TSRCS:.c=.o);
@@ -16,7 +15,7 @@ COMPILER = cc
 TARGET:= test
 
 $(TARGET): $(SRCS)
-	$(COMPILER) $(FLAGS) -D BUFFER_SIZE=9 -g $(SRCS) $(TARGET).c get_next_line.h -o $(TARGET)
+	$(COMPILER) $(FLAGS) -D BUFFER_SIZE=1 -g $(SRCS) test.c -o $(TARGET)
 
 fclean:
 	rm $(TARGET)

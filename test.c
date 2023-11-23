@@ -13,9 +13,8 @@ int		main(int argc, char **argv)
 	if (argc < 2)
 		argv[1] = "readtext";
 	fd = open((argv[1]), O_RDONLY);
-	while (i < 36)
+	while (i < 2) 
 	{
-		line = (char *)malloc(sizeof(*line) * 1);
 		line = get_next_line(fd);
 		printf("-->%s", line);
 		free(line);

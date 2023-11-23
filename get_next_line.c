@@ -1,112 +1,96 @@
+#include "get_next_line.h"
 
-#include	"get_next_line.h"
+//external function: ft_strjoin
+//external function: ft_strchr_m
+//external function: ft_strdup
+//external fuctnion: ft_strlen
 
-void	*ft_memset(void *p_m, int byte, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t			i;
-	unsigned char	*p_char;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	p_char = (unsigned char *)p_m;
+	str = (char *)malloc(sizeof(*s) * (len + 1));
+	if (str == NULL)
+		return (NULL);
 	i = 0;
-	while (i < n)
+	j = 0;
+	while (s[i] != '\0')
 	{
-		*p_char = (unsigned char)byte;
-		p_char++;
+		if (i >= start && j < len)
+		{
+			str[j] = s[i];
+			j++;
+		}
 		i++;
 	}
-	return (p_m);
+	str[j] = '\0';
+	return (str);
 }
 
-char	*newline_join(char *buff, char *buff_read, char **cursor)
+char	*splitline(char **line, char *cursor)
 {
-		size_t		n;
-		size_t		i;
-		char			*left;
-		//char			*tmp;
-		//char			*buff_r_origin;
-
-		//buff_r_origin = buff_read;
-		//tmp = *cursor;
-		n = ft_strchr_m(buff_read, '\n');
-		left = (char *)malloc((n + 1) * sizeof(char));
-		i = 0;
-		while (*buff_read != '\n')
-			left[i++] = *(buff_read++);
-		left[i] = '\n';
-		left[++i] = '\0';	
-		if (*buff == '\0')
-			buff = left;	
-		else
-			buff = ft_strjoin(buff,left);
-		*cursor = ft_strdup(++buff_read);
-		// if (tmp != NULL && tmp != buff_r_origin)
-		//  	free(tmp);
-		return (buff);
-}
-
-char	*read_newline(int fd, char *buff, char **cursor, char *buff_read)
-{
-	ssize_t		read_err;
+	size_t	len;
 	char		*tmp;
+		
+	tmp = cursor;
+	len = ft_strchr_m(cursor,'\n');
+	*line = ft_substr(cursor, 0, len);
+	cursor = ft_substr(cursor, len, ft_strlen(cursor) + 1);
+	if (tmp != NULL)
+		free(tmp);
+	return (cursor);
 
-	read_err = 1;
-	while(read_err > 0)
+}
+char	*read_line(int fd, char *buff, char *cursor)
+{
+	int	read_err;
+	char	*tmp;
+
+	while (1)
 	{
-		tmp = buff;
-		read_err = read(fd, buff_read, BUFFER_SIZE);
-		buff_read[read_err] = '\0';
+		read_err = read(fd, buff, BUFFER_SIZE);
 		if (read_err < 0)
-		{	
-			if (tmp != NULL)
-				free(buff);
 			return(NULL);
-		}
 		if (read_err == 0)
 			break;
-		if (ft_strchr_m(buff_read, '\n'))
-		{
-			buff = newline_join(buff, buff_read, cursor);
+		buff[read_err] = '\0';
+		if (cursor == NULL)
+			cursor = ft_strdup("");
+		tmp = cursor;
+		cursor = ft_strjoin(cursor, buff);
+		if (tmp != NULL)
 			free(tmp);
-			return (buff);
-		}
-		buff = ft_strjoin(buff, buff_read);
-		free(tmp);
+		if (ft_strchr_m(cursor, '\n'))
+			break;
 	}
-	if (tmp != NULL)
-		free (tmp);	
-	return(buff);
+	return (cursor);
 }
 
-
-
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*cursor;
+	char		*line;
 	char		*buff;
-	char		*buff_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (cursor == NULL)
-		buff = ft_strdup("");
-	else
-	{
-		buff = ft_strdup(cursor);
-		free(cursor);
-	}
-	buff_read = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
-	//ft_memset(buff_read, '\0', BUFFER_SIZE + 1);
-	if (buff_read == NULL)
-		return(NULL);
-	if (ft_strchr_m(buff, '\n'))
-		buff = newline_join("",buff, &cursor);
-	else
-		buff = read_newline(fd, buff, &cursor, buff_read);
-//	if (*buff_read != *cursor)
-	free(buff_read);
+	buff = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
 	if (buff == NULL)
 		return (NULL);
-	return (buff);
+	cursor = read_line(fd, buff, cursor);
+	free(buff);
+	if (cursor == NULL)
+		return (NULL);
+	if (*cursor == 0)
+		return(NULL);
+	if (!ft_strchr_m(cursor, '\n'))
+	{
+		line = cursor;
+		cursor = NULL;
+		return(line);
+	}
+	cursor = splitline(&line, cursor);
+	return (line);
 }
-
-
