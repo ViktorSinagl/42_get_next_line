@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsinagl <vsinagl@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 18:06:15 by vsinagl           #+#    #+#             */
-/*   Updated: 2023/11/10 16:13:22 by vsinagl          ###   ########.fr       */
+/*   Created: 2023/11/09 18:05:29 by vsinagl           #+#    #+#             */
+/*   Updated: 2023/12/03 23:02:49 by vsinagl          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 0
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 0
+# endif
 
 size_t	ft_strlen(const char *str);
 size_t	ft_strchr_m(const char *s, int c);

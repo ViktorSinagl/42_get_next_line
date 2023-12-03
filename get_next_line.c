@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vsinagl <vsinagl@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/09 18:05:29 by vsinagl           #+#    #+#             */
+/*   Updated: 2023/12/03 23:02:49 by vsinagl          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -26,11 +38,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 char	*splitline(char **line, char *cursor)
 {
-	size_t	len;
+	size_t		len;
 	char		*tmp;
-		
+
 	tmp = cursor;
-	len = ft_strchr_m(cursor,'\n');
+	len = ft_strchr_m(cursor, '\n');
 	*line = ft_substr(cursor, 0, len);
 	cursor = ft_substr(cursor, len, ft_strlen(cursor) + 1);
 	if (tmp != NULL)
@@ -40,7 +52,7 @@ char	*splitline(char **line, char *cursor)
 
 char	*read_line(int fd, char *buff, char *cursor)
 {
-	int	read_err;
+	int		read_err;
 	char	*tmp;
 
 	while (1)
@@ -49,19 +61,19 @@ char	*read_line(int fd, char *buff, char *cursor)
 		if (read_err < 0)
 		{
 			free(cursor);
-			return(NULL);
+			return (NULL);
 		}
 		if (cursor == NULL || !cursor)
 			cursor = ft_strdup("");
 		if (read_err == 0)
-			break;
+			break ;
 		buff[read_err] = '\0';
 		tmp = cursor;
 		cursor = ft_strjoin(cursor, buff);
 		if (tmp != NULL)
 			free(tmp);
 		if (ft_strchr_m(cursor, '\n'))
-			break;
+			break ;
 	}
 	return (cursor);
 }
@@ -73,7 +85,7 @@ char	*free_cursor(char **cursor)
 		free(*cursor);
 		*cursor = NULL;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -84,21 +96,21 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buff = (char *)malloc(sizeof(char)*(BUFFER_SIZE + 1));
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buff == NULL)
 		return (NULL);
 	cursor = read_line(fd, buff, cursor);
 	free(buff);
-	 if (cursor == NULL)
-	  	return (NULL);
+	if (cursor == NULL)
+		return (NULL);
 	if (*cursor == '\0')
-		return(free_cursor(&cursor));
+		return (free_cursor(&cursor));
 	if (!ft_strchr_m(cursor, '\n'))
 	{
 		line = ft_strdup(cursor);
 		free(cursor);
 		cursor = NULL;
-		return(line);
+		return (line);
 	}
 	cursor = splitline(&line, cursor);
 	return (line);
