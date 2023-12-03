@@ -10,10 +10,11 @@ int		main(int argc, char **argv)
 
 	i = 0;
 	(void)argc;
-	if (argc < 2)
-		argv[1] = "tests/43_with_nl";
+	//if (argc < 2)
+	argv[1] = "tests/limits7";
 	fd = open((argv[1]), O_RDONLY);
-	while (i < 2) 
+	printf("file read or no ?: fd = %i\n", fd);
+	while (i < 4) 
 	{
 		line = get_next_line(fd);
 		printf("-->%s", line);

@@ -36,8 +36,8 @@ char	*splitline(char **line, char *cursor)
 	if (tmp != NULL)
 		free(tmp);
 	return (cursor);
-
 }
+
 char	*read_line(int fd, char *buff, char *cursor)
 {
 	int	read_err;
@@ -47,12 +47,15 @@ char	*read_line(int fd, char *buff, char *cursor)
 	{
 		read_err = read(fd, buff, BUFFER_SIZE);
 		if (read_err < 0)
+		{
+			free(cursor);
 			return(NULL);
+		}
+		if (cursor == NULL || !cursor)
+			cursor = ft_strdup("");
 		if (read_err == 0)
 			break;
 		buff[read_err] = '\0';
-		if (cursor == NULL)
-			cursor = ft_strdup("");
 		tmp = cursor;
 		cursor = ft_strjoin(cursor, buff);
 		if (tmp != NULL)
@@ -61,6 +64,16 @@ char	*read_line(int fd, char *buff, char *cursor)
 			break;
 	}
 	return (cursor);
+}
+
+char	*free_cursor(char **cursor)
+{
+	if (cursor && *cursor)
+	{
+		free(*cursor);
+		*cursor = NULL;
+	}
+	return(NULL);
 }
 
 char	*get_next_line(int fd)
@@ -76,13 +89,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	cursor = read_line(fd, buff, cursor);
 	free(buff);
-	if (cursor == NULL)
-		return (NULL);
-	if (*cursor == 0)
-		return(NULL);
+	 if (cursor == NULL)
+	  	return (NULL);
+	if (*cursor == '\0')
+		return(free_cursor(&cursor));
 	if (!ft_strchr_m(cursor, '\n'))
 	{
-		line = cursor;
+		line = ft_strdup(cursor);
+		free(cursor);
 		cursor = NULL;
 		return(line);
 	}

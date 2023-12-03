@@ -15,7 +15,7 @@ COMPILER = cc
 TARGET:= test
 
 $(TARGET): $(SRCS)
-	$(COMPILER) $(FLAGS) -D BUFFER_SIZE=1 -g $(SRCS) test.c -o $(TARGET)
+	$(COMPILER) $(FLAGS) -D BUFFER_SIZE=10 -g $(SRCS) test.c -o $(TARGET)
 
 fclean:
 	rm $(TARGET)
