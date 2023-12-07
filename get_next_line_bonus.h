@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vsinagl <vsinagl@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 18:05:29 by vsinagl           #+#    #+#             */
-/*   Updated: 2023/12/04 16:25:22 by vsinagl          ###   ########.fr       */
+/*   Created: 2023/12/04 18:05:29 by vsinagl           #+#    #+#             */
+/*   Updated: 2023/12/05 16:25:22 by vsinagl          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -27,7 +27,7 @@ size_t	ft_strchr_m(const char *s, int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *p_m, int byte, size_t n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*get_next_line_b(int fd);
+char	*get_next_line(int fd);
 char	*read_newline(int fd, char *buff, char **cursor, char *buff_read);
 char	*newline_join(char *buff, char *buff_read, char **cursor);
 char	*ft_strdup(const char *s);
